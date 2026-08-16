@@ -1,0 +1,99 @@
+name: Release
+
+# Produce a build artifact via EAS Build, on a version tag or on demand. The build
+# runs on Expo's servers, so this needs an EXPO_TOKEN repo secret and a configured
+# EAS project (see docs/RELEASING.md). Without the token the job no-ops with a note
+# rather than failing, so the workflow is safe to keep in a repo that has not set it
+# up yet.
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to build
+        type: choice
+        options: [android, ios, all]
+        default: android
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - run: npm ci
+
+      # Gate on the secret so the workflow is inert, not red, before EAS is set up.
+      - name: Check for EAS credentials
+        id: guard
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            {
+              echo "### EAS build skipped"
+              echo "\`EXPO_TOKEN\` is not set, so the EAS build was skipped (the docs job still ran)."
+              echo ""
+              echo "To enable it, add the secret in this repo:"
+              echo "**Settings -> Secrets and variables -> Actions -> New repository secret**, name \`EXPO_TOKEN\`."
+              echo "Get the token at <https://expo.dev/settings/access-tokens>. See docs/RELEASING.md."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up EAS
+        if: steps.guard.outputs.ready == 'true'
+        uses: expo/expo-github-action@v9
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      # A tag push has no inputs, so default to android there. `platform` is a
+      # constrained choice input, but read it through env rather than inline anyway.
+      - name: EAS build
+        if: steps.guard.outputs.ready == 'true'
+        env:
+          PLATFORM: ${{ github.event.inputs.platform || 'android' }}
+        run: eas build --platform "$PLATFORM" --profile preview --non-interactive --no-wait
+
+  # Generate the API reference (TypeDoc) and publish it as a build artifact. Needs no
+  # secret, so it runs on every tag/dispatch even before EAS is configured - a
+  # downloadable reference that ships with the build.
+  docs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - run: npm ci
+
+      - name: Generate API docs
+        run: npm run docs
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: shiftly-api-docs
+          path: app/docs/api

@@ -1,0 +1,68 @@
+{
+  "name": "shiftly-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pzverkov/shiftly-rn.git",
+    "directory": "app"
+  },
+  "main": "expo-router/entry",
+  "engines": {
+    "node": ">=24.3.0"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/netinfo": "12.0.1",
+    "@tanstack/query-async-storage-persister": "^5.101.2",
+    "@tanstack/react-query": "^5.101.2",
+    "@tanstack/react-query-persist-client": "^5.101.2",
+    "expo": "~57.0.6",
+    "expo-constants": "~57.0.5",
+    "expo-haptics": "~57.0.1",
+    "expo-linking": "~57.0.3",
+    "expo-localization": "~57.0.1",
+    "expo-location": "~57.0.5",
+    "expo-router": "~57.0.7",
+    "expo-splash-screen": "~57.0.4",
+    "expo-status-bar": "~57.0.1",
+    "i18n-js": "^4.5.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-error-boundary": "^6.1.2",
+    "react-native": "0.86.0",
+    "react-native-reanimated": "4.5.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-worklets": "0.10.0"
+  },
+  "devDependencies": {
+    "@testing-library/react-native": "^14.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/react": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "^57.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "jest": "^29.7.0",
+    "jest-expo": "^57.0.2",
+    "prettier": "^3.9.5",
+    "tinybench": "^6.0.2",
+    "typedoc": "^0.28.20",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.64.0"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "test": "TZ=UTC jest",
+    "test:watch": "TZ=UTC jest --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "docs": "typedoc",
+    "bench": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON src/domain/shift.bench.mts"
+  }
+}

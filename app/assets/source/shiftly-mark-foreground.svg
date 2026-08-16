@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0D48A"/>
+      <stop offset="50%" stop-color="#CBA054"/>
+      <stop offset="100%" stop-color="#9C7830"/>
+    </linearGradient>
+  </defs>
+  <path d="
+    M 636 302
+    C 636 246 583 206 512 206
+    C 441 206 388 246 388 302
+    C 388 358 441 386 512 410
+    C 583 434 636 462 636 518
+    C 636 574 583 614 512 614
+    C 441 614 388 574 388 518
+  "
+    fill="none"
+    stroke="url(#gold)"
+    stroke-width="88"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
