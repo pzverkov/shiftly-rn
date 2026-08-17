@@ -25,6 +25,8 @@ cd api && npm install && npm start
 cd app && npm install && npx expo start
 ```
 
+Stop everything: `./scripts/stop-dev.sh`.
+
 See [api/README.md](api/README.md) for the API contract and business rules, and
 [app/README.md](app/README.md) for the client's architecture, getting-started details,
 and test/lint/typecheck commands.
