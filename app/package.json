@@ -66,6 +66,9 @@
     "bench": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON src/domain/shift.bench.mts"
   },
   "overrides": {
-    "decode-uri-component": "^0.5.1"
+    "decode-uri-component": "^0.5.1",
+    "@expo/cli": {
+      "zod": "^4.6.7"
+    }
   }
 }
