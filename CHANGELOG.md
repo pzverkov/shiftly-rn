@@ -3,6 +3,10 @@
 Notable changes to Shiftly, in reverse chronological order. Dates are the day the
 change landed.
 
+## 2026-10-28
+
+- Updated dependencies and cleared the open security alerts.
+
 ## 2026-08-16
 
 - Rewrote the backend as NestJS (`api/`), replacing the earlier plain Express
