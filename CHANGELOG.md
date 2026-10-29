@@ -3,6 +3,10 @@
 Notable changes to Shiftly, in reverse chronological order. Dates are the day the
 change landed.
 
+## 2026-10-29
+
+- Updated the app to Expo SDK 58 (React Native 0.88, React 19.3, jest 30).
+
 ## 2026-10-28
 
 - Updated dependencies and cleared the open security alerts.
