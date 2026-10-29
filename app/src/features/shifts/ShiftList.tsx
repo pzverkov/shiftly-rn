@@ -64,7 +64,7 @@ export function ShiftList({ shifts, refreshing, onRefresh, ListHeaderComponent }
       data={sorted}
       keyExtractor={(shift) => shift.id}
       contentContainerStyle={[styles.content, { paddingBottom: spacing.xxl + insets.bottom }]}
-      ListHeaderComponent={ListHeaderComponent}
+      ListHeaderComponent={ListHeaderComponent ?? undefined}
       ItemSeparatorComponent={Separator}
       renderItem={({ item }) => {
         const isActive = item.id === active?.id;
